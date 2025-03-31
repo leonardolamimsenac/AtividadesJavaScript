@@ -1,0 +1,51 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 25px;
+}
+
+h2 {
+    text-decoration: underline;
+}
+
+input {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+select {
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+button {
+    padding: 10px;
+    border-radius: 10px;
+    align-self: center;
+}
+
+#resultado {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.azul {
+    background: blue;
+    color: white;
+}
+
+.verde {
+    background: lightgreen;
+}
+
+.laranja {
+    background: orange;
+}
+
+.vermelho {
+    background: red;
+    color: white;
+}

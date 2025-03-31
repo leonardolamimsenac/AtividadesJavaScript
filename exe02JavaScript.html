@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link rel="stylesheet" href="exe02style.css">
+</head>
+
+<body>
+
+    <h2>Calculadora de IMC</h2>
+    <input type="number" id="altura" placeholder="Altura (cm)" step="1" /><br>
+    <input type="number" id="peso" placeholder="Peso (kg)" step="0.1" /><br>
+    <input type="number" id="idade" placeholder="Idade" step="1" /><br>
+
+    <select id="genero">
+        <option>Homem</option>
+        <option>Mulher</option>
+    </select><br>
+
+    <button onclick="calcularIMC()">Calcular</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function calcularIMC() {
+            const alturaCm = parseInt(document.getElementById('altura').value);
+            const peso = parseFloat(document.getElementById('peso').value);
+            const idade = parseInt(document.getElementById('idade').value);
+            const genero = document.getElementById('genero').value;
+            const res = document.getElementById('resultado');
+
+            if (isNaN(alturaCm) || isNaN(peso)) {
+                res.textContent = '';
+                res.className = '';
+                return;
+            }
+
+            const alturaM = alturaCm / 100;
+            const imc = peso / (alturaM * alturaM);
+            var texto = '', classe = '';
+
+            if (imc < 18.5) {
+                texto = 'Magreza';
+                classe = 'azul';
+            } else if (imc < 24.9) {
+                texto = 'Normal';
+                classe = 'verde';
+            } else if (imc < 29.9) {
+                texto = 'Sobrepeso';
+                classe = 'laranja';
+            } else {
+                texto = 'Obesidade';
+                classe = 'vermelho';
+            }
+
+            res.textContent = `IMC: ${imc.toFixed(2)} - ${texto}`;
+            res.className = classe;
+        }
+    </script>
+</body>
+
+</html>

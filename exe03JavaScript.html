@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <link rel="stylesheet" href="exe03style.css">
+</head>
+ 
+<body>
+    <div>
+        <h1>Formulário</h1>
+
+        <div class="nome">
+        <label>Informe seu nome</label>
+        <input type="text" placeholder="Ex.: Maria" id="nome">
+        </div>
+
+        <label>Informe seu melhor email</label>
+        <input type="email" placeholder="Ex.: maria@gmail.com" id="email">
+        <p></p>
+
+        <label>Informe seu número de telefone</label>
+        <input type="text" placeholder="Ex.: (47) 98765-4321" id="telefone" maxlength="11">
+        <p></p>
+
+        <label>Informe seu CEP</label>
+        <input type="text" placeholder="Ex.: 12345678" id="cep" maxlength="8" onblur="loadLogradouro()">
+        <p></p>
+
+        <label>Rua</label>
+        <input type="text" id="rua">
+        <p></p>
+
+        <label>Bairro</label>
+        <input type="text" id="bairro">
+        <p></p>
+
+        <label>Estado</label>
+        <input type="text" id="uf">
+        <p></p>
+
+        <label>Cidade</label>
+        <input type="text" id="cidade">
+        <p></p>
+        
+        <button onclick="validarFormulario()">Enviar</button>
+    </div>
+ 
+    <script>
+        function limpaCEP() {
+            document.getElementById('cep').value = "";
+        }
+ 
+        function loadLogradouro() {
+            let cep = document.getElementById('cep').value.trim();
+ 
+            if (cep.length !== 8 || isNaN(cep)) {
+                alert("CEP inválido! Insira um CEP com 8 dígitos numéricos.");
+                limpaCEP();
+                return;
+            }
+ 
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(conteudo => {
+                    if (!("erro" in conteudo)) {
+                        document.getElementById('rua').value = conteudo.logradouro || "";
+                        document.getElementById('bairro').value = conteudo.bairro || "";
+                        document.getElementById('cidade').value = conteudo.localidade || "";
+                        document.getElementById('uf').value = conteudo.uf || "";
+                    } else {
+                        alert("CEP não encontrado!");
+                        limpaCEP();
+                    }
+                })
+                .catch(() => alert("Erro ao buscar o CEP!"));
+        }
+ 
+        function validarFormulario() {
+            let nome = document.getElementById('nome').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let telefone = document.getElementById('telefone').value.trim();
+            let cep = document.getElementById('cep').value.trim()
+ 
+            if (nome === '') {
+                alert('Nome precisa ser inserido')
+                document.getElementById('nome').focus()
+                return
+            }
+ 
+            if (email === '') {
+                alert('Email válido precisa ser inserido')
+                document.getElementById('email').focus()
+                return
+            }
+ 
+            if (telefone === '' || telefone.length !== 11) {
+                alert('Número de telefone inválido! Insira 11 dígitos numéricos.');
+                document.getElementById('telefone').focus()
+                return
+            }
+ 
+            alert('Formulário enviado com sucesso!')
+        }
+    </script>
+</body>
+ 
+</html>
